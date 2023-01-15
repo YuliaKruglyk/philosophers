@@ -6,7 +6,7 @@
 /*   By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 09:19:31 by ykruhlyk          #+#    #+#             */
-/*   Updated: 2023/01/13 10:35:06 by ykruhlyk         ###   ########.fr       */
+/*   Updated: 2023/01/15 19:06:58 by ykruhlyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ t_data *init_struct(int ac, char **av)
 	table->death = 0;
 	table->start = 0;
 	pthread_mutex_init(&table->print, NULL);
+	pthread_mutex_init(&table->meal, NULL);
+	pthread_mutex_init(&table->eaten, NULL);
+	pthread_mutex_init(&table->dead, NULL);
 	table->thread = NULL;
 	table->philo = NULL;
 	table->fork = NULL;

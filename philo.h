@@ -6,7 +6,7 @@
 /*   By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 16:58:54 by ykruhlyk          #+#    #+#             */
-/*   Updated: 2023/01/13 10:07:12 by ykruhlyk         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:59:39 by ykruhlyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ typedef struct s_data
 	int				death;
 	long long		start;
 	pthread_t		*thread;
+	pthread_mutex_t	eaten;
+	pthread_mutex_t meal;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print;
+	pthread_mutex_t dead;
 	t_philo			*philo;
 }	t_data;
 
