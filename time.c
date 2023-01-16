@@ -6,7 +6,7 @@
 /*   By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 09:05:20 by ykruhlyk          #+#    #+#             */
-/*   Updated: 2023/01/13 10:57:16 by ykruhlyk         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:55:49 by ykruhlyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	ft_usleep(long long time)
 
 	start = timestamp();
 	while (timestamp() - start < time)
-		usleep(100);
+		usleep(1500);
 }

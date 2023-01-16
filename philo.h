@@ -6,7 +6,7 @@
 /*   By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 16:58:54 by ykruhlyk          #+#    #+#             */
-/*   Updated: 2023/01/15 18:59:39 by ykruhlyk         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:38:37 by ykruhlyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ typedef struct s_data
 	long long		start;
 	pthread_t		*thread;
 	pthread_mutex_t	eaten;
-	pthread_mutex_t meal;
+	pthread_mutex_t	meal;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print;
-	pthread_mutex_t dead;
+	pthread_mutex_t	dead;
 	t_philo			*philo;
 }	t_data;
 
@@ -62,15 +62,18 @@ int			ft_free(t_data *structs);
 int			parse_arg(int ac, char **av);
 t_data		*init_struct(int ac, char **av);
 int			malloc_for_everybody(t_data *structs);
-int 		init_philo(t_data *structs);
+int			init_philo(t_data *structs);
 long long	timestamp(void);
 void		ft_usleep(long long time);
 void		ft_destroy_mutex(t_data *structs);
-void		print_states (t_data *data, t_philo *philo, char *act);
-int 		eating_time(t_data *data, t_philo *philo);
+void		print_states(t_data *data, t_philo *philo, char *act);
+int			eating_time(t_data *data, t_philo *philo);
 void		sleeping_time(t_data *data, t_philo *philo);
 void		thinking_time(t_data *data, t_philo *philo);
 void		*death_time(void *temp);
 int			philo_routine(t_data *structs);
+int			death_check(t_data *data);
+int			eaten_check(t_data *structs, t_philo *philos);
+void		print_dm(t_data *structs, t_philo *philos);
 
 #endif

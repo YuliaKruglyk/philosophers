@@ -6,7 +6,7 @@
 /*   By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 16:59:14 by ykruhlyk          #+#    #+#             */
-/*   Updated: 2023/01/13 11:06:45 by ykruhlyk         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:22:43 by ykruhlyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ int	main(int argc, char **argv)
 	philo_routine(structs);
 	ft_destroy_mutex(structs);
 	ft_free(structs);
-	return(0);
+	return (0);
 }

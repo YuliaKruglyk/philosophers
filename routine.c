@@ -6,43 +6,16 @@
 /*   By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 09:22:33 by ykruhlyk          #+#    #+#             */
-/*   Updated: 2023/01/15 19:05:45 by ykruhlyk         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:38:52 by ykruhlyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_states (t_data *data, t_philo *philo, char *act)
+int	eating_time(t_data *data, t_philo *philo)
 {
-	// pthread_mutex_lock(&data->dead);
-	// if (data->death)
-	// {	
-	// 	pthread_mutex_unlock(&data->dead);
-	// 	return ;
-	// }
-	// pthread_mutex_unlock(&data->dead);
-	pthread_mutex_lock(&data->print);
-	pthread_mutex_lock(&data->dead);
-	if (data->death)
-	{	
-		pthread_mutex_unlock(&data->print);
-		pthread_mutex_unlock(&data->dead);
-		return ;
-	}
-	pthread_mutex_unlock(&data->dead);
-	printf("%lld %d %s\n", timestamp() - philo->start, philo->index, act);
-	pthread_mutex_unlock(&data->print);
-}
-
-int eating_time(t_data *data, t_philo *philo)
-{
-	pthread_mutex_lock(&data->dead);
-	if (data->death)
-	{	
-		pthread_mutex_unlock(&data->dead);
-		return 1;
-	}
-	pthread_mutex_unlock(&data->dead);
+	if (death_check(data))
+		return (1);
 	pthread_mutex_lock(&data->fork[philo->fork_left]);
 	print_states(data, philo, "has taken a fork");
 	if (data->philo_num == 1)
@@ -64,73 +37,22 @@ int eating_time(t_data *data, t_philo *philo)
 
 void	sleeping_time(t_data *data, t_philo *philo)
 {
-	pthread_mutex_lock(&data->dead);
-	if (data->death)
-	{	
-		pthread_mutex_unlock(&data->dead);
+	if (death_check(data))
 		return ;
-	}
-	pthread_mutex_unlock(&data->dead);
 	print_states(data, philo, "is sleeping");
 	ft_usleep(philo->time_to_sleep);
 }
 
 void	thinking_time(t_data *data, t_philo *philo)
 {
-	pthread_mutex_lock(&data->dead);
-	if (data->death)
-	{	
-		pthread_mutex_unlock(&data->dead);
+	if (death_check(data))
 		return ;
-	}
-	pthread_mutex_unlock(&data->dead);
 	print_states(data, philo, "is thinking");
-}
-
-void	*death_time(void *temp)
-{
-	t_data	*structs;
-	t_philo	*philos;
-	int		i;
-
-	structs = temp;
-	philos = structs->philo;
-	while (1)
-	{
-		i = -1;
-		while (++i < structs->philo_num)
-		{
-			if (structs->lunch_num)
-			{	
-				pthread_mutex_lock(&structs->eaten);
-				if (philos->eat_num == structs->lunch_num)
-				{	
-					pthread_mutex_unlock(&structs->eaten);
-					return(NULL);
-				}
-				pthread_mutex_unlock(&structs->eaten);
-			}
-			pthread_mutex_lock(&structs->meal);
-			if (timestamp() - philos[i].last_meal > philos[i].time_to_die)
-			{
-				pthread_mutex_unlock(&structs->meal);
-				pthread_mutex_lock(&structs->dead);
-				structs->death = 1;	
-				pthread_mutex_unlock(&structs->dead);
-				pthread_mutex_lock(&structs->print);
-				printf("%lld %d is died \n", timestamp()- philos->start, philos->index);
-				pthread_mutex_unlock(&structs->print);
-				return(NULL);
-			}
-			pthread_mutex_unlock(&structs->meal);
-		}
-	}
-	return (NULL);
 }
 
 void	*life_start(void	*temp)
 {
-	t_philo *philo;
+	t_philo	*philo;
 	t_data	*data;
 
 	philo = (t_philo *)temp;
@@ -142,13 +64,8 @@ void	*life_start(void	*temp)
 	}
 	while (1)
 	{
-		pthread_mutex_lock(&data->dead);
-		if(data->death)
-		{
-			pthread_mutex_unlock(&data->dead);
+		if (death_check(data))
 			break ;
-		}
-		pthread_mutex_unlock(&data->dead);
 		if (data->lunch_num && philo->eat_num == data->lunch_num)
 			return (NULL);
 		if (eating_time(data, philo))
@@ -172,20 +89,14 @@ int	philo_routine(t_data *structs)
 		structs->philo[i].last_meal = structs->start;
 		i++;
 	}
-	i = 0;
-	while (i < structs->philo_num)
-	{	
-		pthread_create(&structs->thread[i], NULL, &life_start, &structs->philo[i]);
-		i++;
-	}
+	i = -1;
+	while (++i < structs->philo_num)
+		pthread_create(&structs->thread[i], NULL, &life_start, \
+					&structs->philo[i]);
 	pthread_create(&check, NULL, &death_time, structs);
-	// pthread_mutex_unlock(&structs->print);
 	pthread_join(check, NULL);
-	i = 0;
-	while (i < structs->philo_num)
-	{
+	i = -1;
+	while (++i < structs->philo_num)
 		pthread_join(structs->thread[i], NULL);
-		i++;
-	}
 	return (0);
 }

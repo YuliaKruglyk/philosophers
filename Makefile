@@ -6,13 +6,13 @@
 #    By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 16:58:58 by ykruhlyk          #+#    #+#              #
-#    Updated: 2023/01/14 16:41:41 by ykruhlyk         ###   ########.fr        #
+#    Updated: 2023/01/16 17:24:07 by ykruhlyk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= 	philo
 
-SRCS	=	main.c include.c init.c time.c routine.c
+SRCS	=	main.c include.c init.c time.c routine.c time_to_die.c 
 
 OBJ		=	$(SRCS:%.c=%.o)
 HEADER	=	philo.h

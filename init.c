@@ -6,7 +6,7 @@
 /*   By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 09:19:31 by ykruhlyk          #+#    #+#             */
-/*   Updated: 2023/01/15 19:06:58 by ykruhlyk         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:36:58 by ykruhlyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	parse_arg(int ac, char **av)
 		printf(R "Invalid number of arguments.\n");
 		return (1);
 	}
-	if (ft_atoi(av[1]) <= 0 || ft_atoi(av[2]) <= 0 || ft_atoi(av[3]) <= 0 
+	if (ft_atoi(av[1]) <= 0 || ft_atoi(av[2]) <= 0 || ft_atoi(av[3]) <= 0 \
 			|| ft_atoi(av[4]) <= 0)
 	{
 		printf(R "Invalid arguments.\n");
@@ -33,9 +33,10 @@ int	parse_arg(int ac, char **av)
 	return (0);
 }
 
-t_data *init_struct(int ac, char **av)
+t_data	*init_struct(int ac, char **av)
 {
 	t_data	*table;
+
 	table = malloc(sizeof(t_data));
 	if (!table)
 		return (NULL);
@@ -45,7 +46,7 @@ t_data *init_struct(int ac, char **av)
 	table->time_to_sleep = ft_atoi(av[4]);
 	if (ac == 6)
 		table->lunch_num = ft_atoi(av[5]);
-	else 
+	else
 		table->lunch_num = 0;
 	table->death = 0;
 	table->start = 0;
@@ -73,9 +74,9 @@ int	malloc_for_everybody(t_data *structs)
 	return (0);
 }
 
-int init_philo(t_data *structs)
+int	init_philo(t_data *structs)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < structs->philo_num)
