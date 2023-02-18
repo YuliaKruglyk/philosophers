@@ -6,7 +6,7 @@
 #    By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 16:58:58 by ykruhlyk          #+#    #+#              #
-#    Updated: 2023/01/16 17:24:07 by ykruhlyk         ###   ########.fr        #
+#    Updated: 2023/01/18 17:26:42 by ykruhlyk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS	=	main.c include.c init.c time.c routine.c time_to_die.c
 OBJ		=	$(SRCS:%.c=%.o)
 HEADER	=	philo.h
 CC 		=	gcc
-FLAGS	=	-g -Wall -Wextra -Werror -fsanitize=thread -g
+FLAGS	=	-g -Wall -Wextra -Werror #-fsanitize=thread -g
 RM		=	rm -rf
 
 Y = "\033[33m"
